@@ -1,0 +1,160 @@
+/* index.css */
+:root {
+  --bg-color: #020202;
+  --text-primary: #ededed;
+  --text-secondary: #777777;
+  --accent-purple: #9d00ff;
+  --accent-red: #ff003c;
+  --dark-panel: rgba(10, 10, 10, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.03);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  overscroll-behavior: none; /* Prevents bounce back on scroll */
+}
+
+h1, h2, h3, h4, .syncopate {
+  font-family: 'Syncopate', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* Base styles for the canvas layout */
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide scrollbar for a cinematic experience */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; 
+}
+
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+/* Ultra-premium glassmorphism */
+.glass-panel {
+  background: var(--dark-panel);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  border-radius: 6px;
+}
+
+/* Cinematic Glitch Button */
+.glitch-btn {
+  position: relative;
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1.2rem 3.5rem;
+  border: 1px solid rgba(157, 0, 255, 0.4);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 0 25px rgba(157, 0, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  z-index: 1;
+}
+
+.glitch-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(157, 0, 255, 0.8), transparent);
+  transition: left 0.5s ease;
+  z-index: -1;
+  transform: skewX(-20deg);
+}
+
+.glitch-btn:hover::before {
+  left: 100%;
+  animation: scanning 2s infinite linear;
+}
+
+.glitch-btn:hover {
+  background: rgba(157, 0, 255, 0.2);
+  box-shadow: 0 0 40px rgba(157, 0, 255, 0.8), inset 0 0 15px rgba(157, 0, 255, 0.5);
+  text-shadow: 0 0 12px var(--accent-purple), 0 0 24px #fff;
+  border-color: #b84dff;
+  transform: scale(1.05);
+  animation: glitch-anim 0.3s infinite alternate;
+}
+
+.glitch-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes glitch-anim {
+  0% { transform: scale(1.05) translate(1px, 1px) skewX(2deg); filter: hue-rotate(0deg); }
+  50% { transform: scale(1.05) translate(-1px, -2px) skewX(-2deg); filter: hue-rotate(90deg); }
+  100% { transform: scale(1.05) translate(2px, 0px) skewX(1deg); filter: hue-rotate(-90deg); }
+}
+
+@keyframes scanning {
+  0% { left: -100%; opacity: 0;}
+  20% { opacity: 1;}
+  80% { opacity: 1;}
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Animations */
+@keyframes fog-drift {
+  0% { transform: translateX(-3%) translateY(0) scale(1.05); opacity: 0.15; }
+  50% { transform: translateX(3%) translateY(-1%) scale(1.1); opacity: 0.25; }
+  100% { transform: translateX(-3%) translateY(0) scale(1.05); opacity: 0.15; }
+}
+
+.fog-overlay {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(circle at center, transparent 15%, #020202 85%),
+              url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+  opacity: 0.15;
+  z-index: 1;
+  pointer-events: none;
+  animation: fog-drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  mix-blend-mode: color-dodge;
+}
